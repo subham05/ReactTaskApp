@@ -1,16 +1,20 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import createSagaMiddleware from '@redux-saga/core';
 import rootSaga from './Saga/';
 
 import PostReducer from './Reducers/PostReducer';
+import {postsapi} from '../api/api';
 
-const sagaMiddleware = createSagaMiddleware();
+// const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: {
-    PostReducer: PostReducer,
+    [postsapi.reducerPath]: postsapi.reducer,
+    // PostReducer: PostReducer,
   },
-  middleware: [sagaMiddleware],
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(postsapi.middleware),
+  // middleware: [sagaMiddleware],
 });
 
-sagaMiddleware.run(rootSaga);
+// sagaMiddleware.run(rootSaga);
 export default store;

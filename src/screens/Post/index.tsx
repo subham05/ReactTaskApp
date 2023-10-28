@@ -18,20 +18,22 @@ import {
   allPostRequest,
   createPostRequest,
 } from '../../Redux/Reducers/PostReducer';
-import normalize from '../../Helper/dimen';
+import {useAddPostMutation, usePostsQuery} from '../../api/api';
 
 // create a component
 const Post = ({navigation}: any) => {
   const [tags, setTags] = useState<string[]>([]);
   const [text1, setText1] = useState<string>('');
   const [text2, setText2] = useState<string>('');
-  const Postreducer = useSelector((state: any) => state.PostReducer);
-  const dispatch = useDispatch();
+  // const Postreducer = useSelector((state: any) => state.PostReducer);
+  // const dispatch = useDispatch();
+  const {refetch} = usePostsQuery();
+  const [addPost] = useAddPostMutation();
   const handleTag = () => {
     setTags(prevArray => [...prevArray, '#' + text2]);
     setText2('');
   };
-  function handlePost() {
+  async function handlePost() {
     // onPress={()=>props.navigation.navigate('TabNavigator')}
     if (text1 == '') {
       ToastAndroid.show('Please Enter Caption', ToastAndroid.SHORT);
@@ -43,17 +45,19 @@ const Post = ({navigation}: any) => {
         caption: text1,
         tags: tags,
       };
-      dispatch(createPostRequest(obj));
+      await addPost(obj);
+      // refetch();
+      // dispatch(createPostRequest(obj));
     }
   }
-  useEffect(() => {
-    if (Postreducer.status === 'Post/createPostSuccess') {
-      console.log('here');
+  // useEffect(() => {
+  //   if (Postreducer.status === 'Post/createPostSuccess') {
+  //     console.log('here');
 
-      dispatch(allPostRequest({}));
-      navigation.goBack();
-    }
-  }, [Postreducer.status, dispatch]);
+  //     dispatch(allPostRequest({}));
+  //     navigation.goBack();
+  //   }
+  // }, [Postreducer.status, dispatch]);
 
   return (
     <KeyboardAvoidingView
@@ -121,11 +125,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     backgroundColor: '#091224',
-    paddingBottom: normalize(40),
+    paddingBottom: 40,
   },
   header: {
     width: '100%',
-    padding: normalize(15),
+    padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -133,66 +137,66 @@ const styles = StyleSheet.create({
   addTag: {position: 'absolute', right: 0, bottom: 12},
   addTagText: {
     color: '#fff',
-    fontSize: normalize(16),
+    fontSize: 16,
     fontFamily: FONTS.inter_Bold,
   },
   avatarText: {
-    fontSize: normalize(16),
+    fontSize: 16,
     fontFamily: FONTS.inter_Bold,
     color: '#fff',
   },
   body: {
     flex: 1,
     width: '100%',
-    padding: normalize(15),
-    marginTop: normalize(20),
+    padding: 15,
+    marginTop: 20,
   },
 
   postButton: {
     backgroundColor: '#E88607',
     borderRadius: 50,
-    height: normalize(34),
+    height: 34,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: normalize(20),
+    paddingHorizontal: 20,
   },
   inputContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#142340',
-    marginBottom: normalize(30),
+    marginBottom: 30,
   },
   label: {
     color: '#fff',
-    fontSize: normalize(20),
+    fontSize: 20,
     fontFamily: FONTS.inter_Bold,
   },
   textInput: {
     color: '#A6B6D6',
-    fontSize: normalize(16),
+    fontSize: 16,
 
     fontFamily: FONTS.inter_Light,
-    marginTop: normalize(10),
+    marginTop: 10,
   },
   suggestionRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginVertical: normalize(20),
+    marginVertical: 20,
     flexWrap: 'wrap',
   },
   suggestionVew: {
     backgroundColor: '#28395A',
-    height: normalize(30),
+    height: 30,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: normalize(10),
-    marginRight: normalize(12),
-    marginBottom: normalize(10),
+    paddingHorizontal: 10,
+    marginRight: 12,
+    marginBottom: 10,
   },
   suggestion: {
     color: '#CFD7E7',
-    fontSize: normalize(12),
+    fontSize: 12,
     fontWeight: '300',
     fontFamily: FONTS.inter_Regular,
   },

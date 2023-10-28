@@ -4,7 +4,6 @@ import {View, Text, StyleSheet} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {FONTS} from '../Theme/theme';
-import normalize from '../Helper/dimen';
 // create a component
 const PostCard = (props: any) => {
   return (
@@ -32,8 +31,8 @@ const styles = StyleSheet.create({
   contain: {
     borderBottomWidth: 1,
     borderBlockColor: '#142340',
-    paddingHorizontal: normalize(16),
-    marginBottom: normalize(16),
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
   titleRow: {
     flexDirection: 'row',
@@ -42,36 +41,36 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: normalize(16),
+    fontSize: 16,
     fontFamily: FONTS.inter_Bold,
-    marginRight: normalize(10),
+    marginRight: 10,
   },
   desc: {
     color: '#A6B6D6',
     fontFamily: FONTS.inter_Light,
     fontWeight: '300',
-    marginTop: normalize(10),
+    marginTop: 10,
   },
   suggestionRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginVertical: normalize(20),
+    marginVertical: 20,
     flexWrap: 'wrap',
   },
   suggestionVew: {
     backgroundColor: '#28395A',
-    height: normalize(30),
+    height: 30,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: normalize(10),
-    marginRight: normalize(12),
-    marginBottom: normalize(10),
+    paddingHorizontal: 10,
+    marginRight: 12,
+    marginBottom: 10,
   },
   suggestion: {
     color: '#CFD7E7',
-    fontSize: normalize(12),
+    fontSize: 12,
     fontWeight: '300',
     fontFamily: FONTS.inter_Regular,
   },

@@ -13,14 +13,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {allPostRequest} from '../../Redux/Reducers/PostReducer';
 import {FONTS} from '../../Theme/theme';
 import PostCard from '../../components/PostCard';
-import normalize from '../../Helper/dimen';
+import {usePostsQuery} from '../../api/api';
+import { useIsFocused } from '@react-navigation/native';
 const Home = ({navigation}: any) => {
-  const dispatch = useDispatch();
-  const Postreducer = useSelector((state: any) => state.PostReducer);
-  console.log('---', Postreducer);
-  useEffect(() => {
-    dispatch(allPostRequest({}));
-  }, []);
+  // const dispatch = useDispatch();
+  // const Postreducer = useSelector((state: any) => state.PostReducer);
+  // console.log('---', Postreducer);
+
+  // useEffect(() => {
+  //   dispatch(allPostRequest({}));
+  // }, []);
+  const {data, error, isLoading, isFetching, isSuccess} = usePostsQuery();
 
   return (
     <View style={styles.container}>
@@ -33,19 +36,23 @@ const Home = ({navigation}: any) => {
         <View />
       </View>
       <View style={styles.body}>
-        <FlatList
-          contentContainerStyle={styles.scrollContainer}
-          data={Postreducer.postList}
-          keyExtractor={(item: any) => item.id}
-          renderItem={({item}: any) => (
-            <PostCard
-              name={item.userName}
-              caption={item.caption}
-              verified={item.isVerified}
-              tags={item.tags}
-            />
-          )}
-        />
+        {error && <Text style={styles.loading}>Something went wrong</Text>}
+        {isLoading && <Text style={styles.loading}>Loading...</Text>}
+        {isSuccess && (
+          <FlatList
+            contentContainerStyle={styles.scrollContainer}
+            data={data?.body}
+            keyExtractor={(item: any) => item.id}
+            renderItem={({item}: any) => (
+              <PostCard
+                name={item.userName}
+                caption={item.caption}
+                verified={item.isVerified}
+                tags={item.tags}
+              />
+            )}
+          />
+        )}
       </View>
       <TouchableOpacity
         style={styles.addPostButton1}
@@ -73,22 +80,22 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderBottomColor: '#1C3059',
-    padding: normalize(15),
-    height: normalize(70),
+    padding: 15,
+    height: 70,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarImage: {
-    height: normalize(38),
-    width: normalize(38),
+    height: 38,
+    width: 38,
     borderRadius: 80,
     position: 'absolute',
-    left: normalize(15),
-    top: normalize(15),
+    left: 15,
+    top: 15,
   },
   avatarText: {
-    fontSize: normalize(20),
+    fontSize: 20,
 
     color: '#fff',
     fontFamily: FONTS.inter_Bold,
@@ -98,21 +105,28 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   scrollContainer: {
-    paddingVertical: normalize(24),
+    paddingVertical: 24,
   },
 
   addPostButton: {
-    width: normalize(50),
-    height: normalize(50),
-    borderRadius: normalize(50),
+    width: 50,
+    height: 50,
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
   addPostButton1: {
     position: 'absolute',
-    bottom: normalize(40),
-    right: normalize(20),
+    bottom: 40,
+    right: 20,
     borderRadius: 50,
+  },
+  loading: {
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: 30,
+    color: '#fff',
+    fontFamily: FONTS.inter_Bold,
   },
 });
 
