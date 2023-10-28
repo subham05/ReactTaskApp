@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {allPostRequest} from '../../Redux/Reducers/PostReducer';
 import {FONTS} from '../../Theme/theme';
 import PostCard from '../../components/PostCard';
-
+import normalize from '../../Helper/dimen';
 const Home = ({navigation}: any) => {
   const dispatch = useDispatch();
   const Postreducer = useSelector((state: any) => state.PostReducer);
@@ -73,22 +73,22 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderBottomColor: '#1C3059',
-    padding: 15,
-    height: 70,
+    padding: normalize(15),
+    height: normalize(70),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarImage: {
-    height: 38,
-    width: 38,
+    height: normalize(38),
+    width: normalize(38),
     borderRadius: 80,
     position: 'absolute',
-    left: 15,
-    top: 15,
+    left: normalize(15),
+    top: normalize(15),
   },
   avatarText: {
-    fontSize: 20,
+    fontSize: normalize(20),
 
     color: '#fff',
     fontFamily: FONTS.inter_Bold,
@@ -98,20 +98,20 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   scrollContainer: {
-    paddingVertical: 24,
+    paddingVertical: normalize(24),
   },
 
   addPostButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
+    width: normalize(50),
+    height: normalize(50),
+    borderRadius: normalize(50),
     justifyContent: 'center',
     alignItems: 'center',
   },
   addPostButton1: {
     position: 'absolute',
-    bottom: 40,
-    right: 20,
+    bottom: normalize(40),
+    right: normalize(20),
     borderRadius: 50,
   },
 });
